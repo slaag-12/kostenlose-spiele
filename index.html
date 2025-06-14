@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <title>Kostenlose Spiele</title>
+  <style>
+    body { font-family: sans-serif; max-width: 800px; margin: auto; }
+    .game { border: 1px solid #ccc; padding: 10px; margin: 10px 0; }
+    img { max-width: 100%; }
+  </style>
+</head>
+<body>
+  <h1>🎁 Aktuelle kostenlose Spiele</h1>
+  <div id="games">Lade Spiele…</div>
+
+  <script>
+    fetch('free_games.json')
+      .then(res => res.json())
+      .then(data => {
+        const div = document.getElementById('games');
+        div.innerHTML = "";
+        data.forEach(g => {
+          const el = document.createElement('div');
+          el.className = 'game';
+          el.innerHTML = `
+            <h2>${g.title}</h2>
+            <img src="${g.image}" alt="${g.title}">
+            <p><strong>Store:</strong> ${g.store}</p>
+            <p><a href="${g.url}" target="_blank">Zum Spiel</a></p>
+            <p><strong>Endet:</strong> ${g.endDate || 'Unbekannt'}</p>
+          `;
+          div.appendChild(el);
+        });
+      });
+  </script>
+</body>
+</html>
